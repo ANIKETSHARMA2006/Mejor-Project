@@ -1,3 +1,22 @@
+@import "tailwindcss";
+
+@theme {
+  --animate-glow: glow 3s ease-in-out infinite;
+
+  @keyframes glow {
+    0%, 100% {
+      box-shadow: 0 0 5px #3b82f6,
+                  0 0 5px #3b82f6;
+    }
+
+    50% {
+      box-shadow: 0 0 35px #3b82f6,
+                  0 0 55px #3b82f6;
+    }
+  }
+}
+
 body{
     background-color: black;
+    overflow: hidden;
 }
