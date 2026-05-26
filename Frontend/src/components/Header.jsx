@@ -20,7 +20,7 @@ const Header = () => {
         </div>
       </div>
       <div className="btn-con ">
-        <button className=" text-white mr-10 px-4 rounded-2xl py-2 bg-[#7c3aed]">New Session</button>
+        <button className=" text-white mr-8 px-4 rounded-2xl py-2 bg-[#7c3aed]">New Session</button>
       </div>
     </div>
   );
