@@ -3,7 +3,7 @@ import whiterobo from "../assets/white-robo.svg";
 
 const Header = () => {
   return (
-    <div className="w-[1080px] mt-3 mx-auto rounded-t-xl border border-[#4c4c4c] flex  items-center justify-between">
+    <div className="w-270 mt-3 mx-auto rounded-t-xl border border-[#4c4c4c] flex  items-center justify-between">
       <div className="flex items-center">
         <div className="p-3 pl-7">
           <img
