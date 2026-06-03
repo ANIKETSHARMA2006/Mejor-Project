@@ -1,13 +1,32 @@
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 require("dotenv/config");
 const express = require("express");
+const path = require("path");
 const { createAgent } = require("./agents/createAgent");
 const { AgentPlatform } = require("./agents/types");
+const {
+    attachUser,
+    clearSessionCookie,
+    loginOrCreateUser,
+    requireApiAuth,
+    requirePageAuth,
+    setSessionCookie,
+} = require("./auth");
 const { apiKey, serverClient } = require("./serverClient");
 
 const app = express();
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "..", "views"));
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use(cors({ origin: "*" }));
+app.use(cookieParser());
+app.use(attachUser);
+
+app.get("/favicon.ico", (req, res) => {
+    res.status(204).end();
+});
 
 // Map to store the AI Agent instances
 // [user_id string]: AI Agent
@@ -29,6 +48,42 @@ setInterval(async () => {
 }, 5000);
 
 app.get("/", (req, res) => {
+    res.redirect(req.user ? "/app" : "/login");
+});
+
+app.get("/login", (req, res) => {
+    if (req.user) {
+        res.redirect("/app");
+        return;
+    }
+    res.render("login", { error: "", username: "" });
+});
+
+app.post("/login", async (req, res) => {
+    const { username, password } = req.body;
+
+    try {
+        const user = await loginOrCreateUser(username, password);
+        setSessionCookie(res, user.id);
+        res.redirect("/app");
+    } catch (error) {
+        res.status(401).render("login", {
+            error: error.message,
+            username,
+        });
+    }
+});
+
+app.get("/logout", (req, res) => {
+    clearSessionCookie(res);
+    res.redirect("/login");
+});
+
+app.get("/app", requirePageAuth, (req, res) => {
+    res.render("app", { user: req.user });
+});
+
+app.get("/health", (req, res) => {
     res.json({
         message: "AI Writing Assistant Server is running",
         apiKey: apiKey,
@@ -39,7 +94,7 @@ app.get("/", (req, res) => {
 /**
  * Handle the request to start the AI Agent
  */
-app.post("/start-ai-agent", async (req, res) => {
+app.post("/start-ai-agent", requireApiAuth, async (req, res) => {
     const { channel_id, channel_type = "messaging" } = req.body;
     console.log(`[API] /start-ai-agent called for channel: ${channel_id}`);
 
@@ -99,7 +154,7 @@ app.post("/start-ai-agent", async (req, res) => {
 /**
  * Handle the request to stop the AI Agent
  */
-app.post("/stop-ai-agent", async (req, res) => {
+app.post("/stop-ai-agent", requireApiAuth, async (req, res) => {
     const { channel_id } = req.body;
     console.log(`[API] /stop-ai-agent called for channel: ${channel_id}`);
     const user_id = `ai-bot-${channel_id.replace(/[!]/g, "")}`;
@@ -122,7 +177,7 @@ app.post("/stop-ai-agent", async (req, res) => {
     }
 });
 
-app.get("/agent-status", (req, res) => {
+app.get("/agent-status", requireApiAuth, (req, res) => {
     const { channel_id } = req.query;
     if (!channel_id || typeof channel_id !== "string") {
         return res.status(400).json({ error: "Missing channel_id" });
@@ -145,23 +200,15 @@ app.get("/agent-status", (req, res) => {
 });
 
 // Token provider endpoint - generates secure tokens
-app.post("/token", async (req, res) => {
+app.post("/token", requireApiAuth, async (req, res) => {
     try {
-        const { userId } = req.body;
-
-        if (!userId) {
-            return res.status(400).json({
-                error: "userId is required",
-            });
-        }
-
         // Create token with expiration (1 hour) and issued at time for security
         const issuedAt = Math.floor(Date.now() / 1000);
         const expiration = issuedAt + 60 * 60; // 1 hour from now
 
-        const token = serverClient.createToken(userId, expiration, issuedAt);
+        const token = serverClient.createToken(req.user.id, expiration, issuedAt);
 
-        res.json({ token });
+        res.json({ token, userId: req.user.id });
     } catch (error) {
         console.error("Error generating token:", error);
         res.status(500).json({
