@@ -92,9 +92,11 @@ export class OpenAIResponseHandler {
 
                 if (toolOutputs.length > 0) {
                     currentStream = this.openai.beta.threads.runs.submitToolOutputsStream(
-                        this.openAiThread.id,
                         this.run_id,
-                        { tool_outputs: toolOutputs }
+                        {
+                            thread_id: this.openAiThread.id,
+                            tool_outputs: toolOutputs,
+                        }
                     );
                     toolOutputs = []; // Reset tool outputs
                 }
@@ -128,8 +130,8 @@ export class OpenAIResponseHandler {
 
         try {
             await this.openai.beta.threads.runs.cancel(
-                this.openAiThread.id,
-                this.run_id
+                this.run_id,
+                { thread_id: this.openAiThread.id }
             );
         } catch (e) {
             console.error("Error cancelling run", e);
@@ -202,7 +204,6 @@ export class OpenAIResponseHandler {
         await this.chatClient.partialUpdateMessage(this.message.id, {
             set: {
                 text: error.message ?? "Error generating the message",
-                message: error.toString(),
             },
         });
         await this.dispose();

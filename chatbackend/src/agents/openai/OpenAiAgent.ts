@@ -1,7 +1,14 @@
 import OpenAI from "openai";
-import type { Channel, DefaultGenerics, Event, StreamChat } from "stream-chat";
+import type { Channel, Event, Message, StreamChat } from "stream-chat";
 import type { AIAgent } from "../types";
 import { OpenAIResponseHandler } from "./OpenAIResponseHandler";
+
+type AiMessage = Message & {
+    ai_generated?: boolean;
+    custom?: {
+        writingTask?: string;
+    };
+};
 
 export class OpenAIAgent implements AIAgent {
     private openai?: OpenAI;
@@ -98,23 +105,24 @@ export class OpenAIAgent implements AIAgent {
 Your goal is to provide accurate, current, and helpful written content. Failure to use web search for recent topics will result in an incorrect answer.`;
     };
 
-    private handleMessage = async (e: Event<DefaultGenerics>) => {
+    private handleMessage = async (e: Event) => {
         if (!this.openai || !this.openAiThread || !this.assistant) {
             console.log("OpenAI not initialized");
             return;
         }
 
-        if (!e.message || e.message.ai_generated) {
+        const eventMessage = e.message as AiMessage | undefined;
+
+        if (!eventMessage || eventMessage.ai_generated) {
             return;
         }
 
-        const message = e.message.text;
+        const message = eventMessage.text;
         if (!message) return;
 
         this.lastInteractionTs = Date.now();
 
-        const writingTask = (e.message.custom as { writingTask?: string })
-            ?.writingTask;
+        const writingTask = eventMessage.custom?.writingTask;
         const context = writingTask ? `Writing Task: ${writingTask}` : undefined;
         const instructions = this.getWritingAssistantPrompt(context);
 
@@ -126,7 +134,7 @@ Your goal is to provide accurate, current, and helpful written content. Failure 
         const { message: channelMessage } = await this.channel.sendMessage({
             text: "",
             ai_generated: true,
-        });
+        } as AiMessage);
 
         await this.channel.sendEvent({
             type: "ai_indicator.update",

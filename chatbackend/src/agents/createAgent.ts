@@ -1,6 +1,6 @@
 import { StreamChat } from "stream-chat";
 import { apiKey, serverClient } from "../serverClient";
-import { OpenAIAgent } from "./openai/OpenAIAgent";
+import { OpenAIAgent } from "./openai/OpenAiAgent";
 import { AgentPlatform, AIAgent } from "./types";
 
 export const createAgent = async (
