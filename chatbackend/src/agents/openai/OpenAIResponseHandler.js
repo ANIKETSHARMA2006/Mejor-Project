@@ -1,23 +1,26 @@
-import OpenAI from "openai";
-import type { AssistantStream } from "openai/lib/AssistantStream";
-import type { Channel, Event, MessageResponse, StreamChat } from "stream-chat";
-
-export class OpenAIResponseHandler {
-    private message_text = "";
-    private chunk_counter = 0;
-    private run_id = "";
-    private is_done = false;
-    private last_update_time = 0;
-
+class OpenAIResponseHandler {
     constructor(
-        private readonly openai: OpenAI,
-        private readonly openAiThread: OpenAI.Beta.Threads.Thread,
-        private readonly assistantStream: AssistantStream,
-        private readonly chatClient: StreamChat,
-        private readonly channel: Channel,
-        private readonly message: MessageResponse,
-        private readonly onDispose: () => void
+        openai,
+        openAiThread,
+        assistantStream,
+        chatClient,
+        channel,
+        message,
+        onDispose
     ) {
+        this.openai = openai;
+        this.openAiThread = openAiThread;
+        this.assistantStream = assistantStream;
+        this.chatClient = chatClient;
+        this.channel = channel;
+        this.message = message;
+        this.onDispose = onDispose;
+        this.message_text = "";
+        this.chunk_counter = 0;
+        this.run_id = "";
+        this.is_done = false;
+        this.last_update_time = 0;
+
         this.chatClient.on("ai_indicator.stop", this.handleStopGenerating);
     }
 
@@ -25,7 +28,7 @@ export class OpenAIResponseHandler {
         const { cid, id: message_id } = this.message;
         let isCompleted = false;
         let toolOutputs = [];
-        let currentStream: AssistantStream = this.assistantStream;
+        let currentStream = this.assistantStream;
 
         try {
             while (!isCompleted) {
@@ -103,7 +106,7 @@ export class OpenAIResponseHandler {
             }
         } catch (error) {
             console.error("An error occurred during the run:", error);
-            await this.handleError(error as Error);
+            await this.handleError(error);
         } finally {
             await this.dispose();
         }
@@ -118,7 +121,7 @@ export class OpenAIResponseHandler {
         this.onDispose();
     };
 
-    private handleStopGenerating = async (event: Event) => {
+    handleStopGenerating = async (event) => {
         if (this.is_done || event.message_id !== this.message.id) {
             return;
         }
@@ -145,9 +148,7 @@ export class OpenAIResponseHandler {
         await this.dispose();
     };
 
-    private handleStreamEvent = (
-        event: OpenAI.Beta.Assistants.AssistantStreamEvent
-    ) => {
+    handleStreamEvent = (event) => {
         const { cid, id } = this.message;
 
         if (event.event === "thread.run.created") {
@@ -191,7 +192,7 @@ export class OpenAIResponseHandler {
         }
     };
 
-    private handleError = async (error: Error) => {
+    handleError = async (error) => {
         if (this.is_done) {
             return;
         }
@@ -209,7 +210,7 @@ export class OpenAIResponseHandler {
         await this.dispose();
     };
 
-    private performWebSearch = async (query: string): Promise<string> => {
+    performWebSearch = async (query) => {
         const TAVILY_API_KEY = process.env.TAVILY_API_KEY;
 
         if (!TAVILY_API_KEY) {
@@ -261,3 +262,7 @@ export class OpenAIResponseHandler {
         }
     };
 }
+
+module.exports = {
+    OpenAIResponseHandler,
+};

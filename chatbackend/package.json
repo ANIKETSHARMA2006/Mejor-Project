@@ -2,14 +2,14 @@
   "name": "chatbackend",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.js",
+  "main": "src/index.js",
   "type": "commonjs",
   "engines": {
     "node": ">=20"
   },
   "scripts": {
-    "start": "tsc && node dist/index.js",
-    "dev": "nodemon --exec \"npm run start\" --ext ts --watch src"
+    "start": "node src/index.js",
+    "dev": "nodemon --exec \"npm run start\" --ext js --watch src"
   },
   "keywords": [],
   "author": "",

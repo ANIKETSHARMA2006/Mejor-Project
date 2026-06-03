@@ -1,14 +1,14 @@
-import { StreamChat } from "stream-chat";
-import { apiKey, serverClient } from "../serverClient";
-import { OpenAIAgent } from "./openai/OpenAiAgent";
-import { AgentPlatform, AIAgent } from "./types";
+const { StreamChat } = require("stream-chat");
+const { apiKey, serverClient } = require("../serverClient");
+const { OpenAIAgent } = require("./openai/OpenAiAgent");
+const { AgentPlatform } = require("./types");
 
-export const createAgent = async (
-    user_id: string,
-    platform: AgentPlatform,
-    channel_type: string,
-    channel_id: string
-): Promise<AIAgent> => {
+const createAgent = async (
+    user_id,
+    platform,
+    channel_type,
+    channel_id
+) => {
     const token = serverClient.createToken(user_id);
     // This is the client for the AI bot user
     const chatClient = new StreamChat(apiKey, undefined, {
@@ -26,4 +26,8 @@ export const createAgent = async (
         default:
             throw new Error(`Unsupported agent platform: ${platform}`);
     }
+};
+
+module.exports = {
+    createAgent,
 };

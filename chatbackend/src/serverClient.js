@@ -1,7 +1,18 @@
-import { StreamChat } from 'stream-chat';
-export const apikey = process.env.STREAM_API_KEY;
-export const apiSecret = process.env.STREAM_API_SECRET;
-if (!apikey || !apiSecret) {
-    throw new Error("Missing required environment variables for STREAM_API_KEY and STREAM_API_SECRET");
+const { StreamChat } = require("stream-chat");
+
+const apiKey = process.env.STREAM_API_KEY;
+const apiSecret = process.env.STREAM_API_SECRET;
+
+if (!apiKey || !apiSecret) {
+    throw new Error(
+        "Missing required environment variables STREAM_API_KEY or STREAM_API_SECRET"
+    );
 }
-export const serverClient = new StreamChat(apikey, apiSecret);
+
+const serverClient = new StreamChat(apiKey, apiSecret);
+
+module.exports = {
+    apiKey,
+    apiSecret,
+    serverClient,
+};
