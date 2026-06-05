@@ -2,6 +2,11 @@ import React from "react";
 import whiterobo from "../assets/white-robo.svg";
 
 const Header = () => {
+
+  function handleClick() {
+    window.location.reload();
+  }
+
   return (
 
     <div className="w-270 mx-auto rounded-t-xl border border-[#4c4c4c] flex  items-center justify-between">
@@ -22,7 +27,7 @@ const Header = () => {
         </div>
       </div>
       <div className="btn-con ">
-        <button className=" text-white mr-8 px-4 rounded-2xl py-2 bg-[#7c3aed]">New Session</button>
+        <button onClick={handleClick} className=" text-white mr-8 px-4 rounded-2xl py-2 bg-[#7c3aed]">New Session</button>
       </div>
     </div>
   );

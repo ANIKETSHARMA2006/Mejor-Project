@@ -1,7 +1,12 @@
 import React from "react";
 import bot from "../assets/bot-stroke-rounded.svg";
 
-const Open = () => {
+const Open = ({inputRef}) => {
+
+  function handleClick(e){
+    inputRef.current.value=e.currentTarget.innerText;
+  }
+
   return (
     <div className="w-270 mx-auto h-[74%]  border-x border-[#4c4c4c]">
       <div className="flex flex-col items-center gap-2">
@@ -21,19 +26,19 @@ const Open = () => {
           What would you like to write today?
         </h2>
         <div className="grid grid-cols-2 gap-4 mt-10 text-white p-2">
-          <button className="py-6 px-10 bg-black rounded-2xl text-sm cursor-pointer hover:border hover:border-violet-600 transition-all duration-300">
+          <button onClick={handleClick} className="py-6 px-10 bg-black rounded-2xl text-sm cursor-pointer hover:border hover:border-violet-600 transition-all duration-300">
             Write a professional email to my boss about a project update
           </button>
 
-          <button className="py-6 px-10 bg-black rounded-2xl text-sm cursor-pointer hover:border hover:border-violet-600 transition-all duration-300">
+          <button onClick={handleClick} className="py-6 px-10 bg-black rounded-2xl text-sm cursor-pointer hover:border hover:border-violet-600 transition-all duration-300">
             Draft a compelling LinkedIn post about a recent achievement
           </button>
 
-          <button className="py-6 px-10 bg-black rounded-2xl text-sm cursor-pointer hover:border hover:border-violet-600 transition-all duration-300">
+          <button onClick={handleClick} className="py-6 px-10 bg-black rounded-2xl text-sm cursor-pointer hover:border hover:border-violet-600 transition-all duration-300">
             Create an executive summary for a quarterly business report
           </button>
 
-          <button className="py-6 px-10 bg-black rounded-2xl text-sm cursor-pointer hover:border hover:border-violet-600 transition-all duration-300">
+          <button onClick={handleClick} className="py-6 px-10 bg-black rounded-2xl text-sm cursor-pointer hover:border hover:border-violet-600 transition-all duration-300">
             Write a persuasive proposal for a new marketing campaign
           </button>
         </div>
