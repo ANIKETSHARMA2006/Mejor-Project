@@ -9,7 +9,7 @@ if (!apiKey || !apiSecret) {
     );
 }
 
-const serverClient = new StreamChat(apiKey, apiSecret);
+const serverClient = StreamChat.getInstance(apiKey, apiSecret, { timeout: 60000 });
 
 module.exports = {
     apiKey,

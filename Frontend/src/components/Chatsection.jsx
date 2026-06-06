@@ -32,7 +32,7 @@ const Chatsection = ({ messages = defaultMessages }) => {
               >
                 {!isUser && (
                   <p className="mb-2 text-xs font-semibold text-[#a78bfa]">
-                    Gemini 2.5 Flash
+                    Gemini AI
                   </p>
                 )}
                 <p>{message.text}</p>
