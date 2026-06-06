@@ -48,12 +48,12 @@ setInterval(async () => {
 }, 5000);
 
 app.get("/", (req, res) => {
-    res.redirect(req.user ? "/app" : "/login");
+    res.redirect(req.user ? "http://localhost:5173/" : "/login");
 });
 
 app.get("/login", (req, res) => {
     if (req.user) {
-        res.redirect("/app");
+        res.redirect("http://localhost:5173/");
         return;
     }
     res.render("login", { error: "", username: "" });
@@ -65,7 +65,7 @@ app.post("/login", async (req, res) => {
     try {
         const user = await loginOrCreateUser(username, password);
         setSessionCookie(res, user.id);
-        res.redirect("/app");
+        res.redirect("http://localhost:5173/");
     } catch (error) {
         res.status(401).render("login", {
             error: error.message,
@@ -122,7 +122,7 @@ app.post("/start-ai-agent", requireApiAuth, async (req, res) => {
 
             const agent = await createAgent(
                 user_id,
-                AgentPlatform.OPENAI,
+                AgentPlatform.GEMINI,
                 channel_type,
                 channel_id
             );

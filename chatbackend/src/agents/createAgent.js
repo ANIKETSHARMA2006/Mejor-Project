@@ -1,6 +1,7 @@
 const { StreamChat } = require("stream-chat");
 const { apiKey, serverClient } = require("../serverClient");
 const { OpenAIAgent } = require("./openai/OpenAiAgent");
+const { GeminiAgent } = require("./gemini/GeminiAgent");
 const { AgentPlatform } = require("./types");
 
 const createAgent = async (
@@ -11,8 +12,9 @@ const createAgent = async (
 ) => {
     const token = serverClient.createToken(user_id);
     // This is the client for the AI bot user
-    const chatClient = new StreamChat(apiKey, undefined, {
+    const chatClient = StreamChat.getInstance(apiKey, undefined, {
         allowServerSideConnect: true,
+        timeout: 60000
     });
 
     await chatClient.connectUser({ id: user_id }, token);
@@ -23,6 +25,8 @@ const createAgent = async (
         case AgentPlatform.WRITING_ASSISTANT:
         case AgentPlatform.OPENAI:
             return new OpenAIAgent(chatClient, channel);
+        case AgentPlatform.GEMINI:
+            return new GeminiAgent(chatClient, channel);
         default:
             throw new Error(`Unsupported agent platform: ${platform}`);
     }

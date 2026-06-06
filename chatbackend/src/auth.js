@@ -8,7 +8,7 @@ const dataDir = path.join(__dirname, "..", "data");
 const usersFile = path.join(dataDir, "users.json");
 const sessionCookieName = "mejor_session";
 const jwtSecret = process.env.JWT_SECRET || process.env.SESSION_SECRET;
-const saltRounds = 12;
+const saltRounds = 10;
 
 if (!jwtSecret) {
     throw new Error("Missing JWT_SECRET or SESSION_SECRET environment variable");
