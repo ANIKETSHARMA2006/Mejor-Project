@@ -48,7 +48,7 @@ setInterval(async () => {
 }, 5000);
 
 app.get("/", (req, res) => {
-    res.redirect(req.user ? "http://localhost:5173/" : "/login");
+    res.redirect(req.user ? "https://mejor-project-livid.vercel.app/" : "/login");
 });
 
 app.get("/login", (req, res) => {

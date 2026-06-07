@@ -93,7 +93,7 @@ const Chat = () => {
       } catch (error) {
         console.error("Failed to initialize chat:", error);
         if (error.response && error.response.status === 401) {
-          window.location.href = 'http://localhost:3000/login';
+          window.location.href = 'https://mejor-backend.onrender.com/login';
         } else {
           setIsCheckingAuth(false);
           alert("Chat Connection Error: " + (error.message || "Unknown error") + "\nPlease check your API keys or console for details.");
