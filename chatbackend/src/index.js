@@ -53,7 +53,7 @@ app.get("/", (req, res) => {
 
 app.get("/login", (req, res) => {
     if (req.user) {
-        res.redirect("http://localhost:5173/");
+        res.redirect("https://mejor-project-livid.vercel.app/");
         return;
     }
     res.render("login", { error: "", username: "" });
@@ -65,7 +65,7 @@ app.post("/login", async (req, res) => {
     try {
         const user = await loginOrCreateUser(username, password);
         setSessionCookie(res, user.id);
-        res.redirect("http://localhost:5173/");
+        res.redirect("https://mejor-project-livid.vercel.app/");
     } catch (error) {
         res.status(401).render("login", {
             error: error.message,
