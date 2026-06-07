@@ -62,7 +62,7 @@ const Input = ({ inputRef, handleSubmit }) => {
       >
         <input
           placeholder="How can I help you? Write your question here."
-          className="bg-[#000000] w-[80%] border border-white hover:border-[#7c3aed] hover:border-3 h-[65%] text-white text-m p-5 rounded-4xl mx-4"
+          className="bg-[#000000] w-[100%] border border-white hover:border-[#7c3aed] hover:border-3 h-[65%] text-white text-m p-5 rounded-4xl mx-4"
           type="text"
           ref={inputRef}
         />
@@ -88,7 +88,7 @@ const Input = ({ inputRef, handleSubmit }) => {
 
         <button
           type="submit"
-          className="flex items-center justify-center h-[65%] w-[10%] mr-5"
+          className="flex items-center justify-center h-[55%] w-[5%] mx-5 mr-8 cursor-pointer"
         >
           <img className="w-9 ml-3" src={Search} alt="search button" />
         </button>
