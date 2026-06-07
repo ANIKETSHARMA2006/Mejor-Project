@@ -53,12 +53,12 @@ setInterval(async () => {
 }, 5000);
 
 app.get("/", (req, res) => {
-    res.redirect(req.user ? "https://mejor-project-livid.vercel.app/" : "/login");
+    res.redirect(req.user ? "https://mejor-project-sigma.vercel.app/" : "/login");
 });
 
 app.get("/login", (req, res) => {
     if (req.user) {
-        res.redirect("https://mejor-project-livid.vercel.app/");
+        res.redirect("https://mejor-project-sigma.vercel.app/");
         return;
     }
     res.render("login", { error: "", username: "" });
@@ -70,7 +70,7 @@ app.post("/login", async (req, res) => {
     try {
         const user = await loginOrCreateUser(username, password);
         setSessionCookie(res, user.id);
-        res.redirect("https://mejor-project-livid.vercel.app/");
+        res.redirect("https://mejor-project-sigma.vercel.app/");
     } catch (error) {
         res.status(401).render("login", {
             error: error.message,
