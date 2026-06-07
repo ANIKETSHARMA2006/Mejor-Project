@@ -9,7 +9,7 @@ const Header = () => {
 
   return (
 
-    <div className="w-270 mx-auto rounded-t-xl border border-[#4c4c4c] flex  items-center justify-between">
+    <div className="w-312.5 mx-auto rounded-t-xl border border-[#4c4c4c] flex  items-center justify-between">
 
       <div className="flex items-center">
         <div className="p-3 pl-7">

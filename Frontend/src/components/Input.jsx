@@ -58,7 +58,7 @@ const Input = ({ inputRef, handleSubmit }) => {
     <div>
       <form
         onSubmit={handleSubmit}
-        className="w-270 mx-auto h-23 rounded-b-xl border flex items-center border-[#4c4c4c]"
+        className="w-312.5 mx-auto h-23 rounded-b-xl border flex items-center border-[#4c4c4c]"
       >
         <input
           placeholder="How can I help you? Write your question here."
