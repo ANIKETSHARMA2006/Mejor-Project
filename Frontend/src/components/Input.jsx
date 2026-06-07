@@ -12,7 +12,6 @@ const Input = ({ inputRef, handleSubmit }) => {
       window.SpeechRecognition || window.webkitSpeechRecognition;
 
     if (!SpeechRecognition) {
-      alert("Speech Recognition is not supported in this browser.");
       return;
     }
 

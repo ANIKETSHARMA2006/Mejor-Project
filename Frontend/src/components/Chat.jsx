@@ -22,8 +22,10 @@ const Chat = () => {
 
     const initChat = async () => {
       try {
+        const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || (window.location.hostname === 'localhost' ? 'http://localhost:3001' : 'https://mejor-backend.onrender.com');
+
         // Fetch token from backend using session cookie
-        const response = await axios.post('/api/token', {}, { withCredentials: true });
+        const response = await axios.post(`${API_BASE_URL}/token`, {}, { withCredentials: true });
         const { token, userId } = response.data;
 
         // Initialize Stream Client
@@ -59,7 +61,7 @@ const Chat = () => {
         setIsCheckingAuth(false);
 
         // Start AI agent on backend in the background (no await)
-        axios.post('/api/start-ai-agent', { channel_id: channelId }, { withCredentials: true })
+        axios.post(`${API_BASE_URL}/start-ai-agent`, { channel_id: channelId }, { withCredentials: true })
              .catch(err => console.error("Error starting AI agent:", err));
 
         // Listen for new messages
@@ -96,7 +98,6 @@ const Chat = () => {
           window.location.href = 'https://mejor-backend.onrender.com/login';
         } else {
           setIsCheckingAuth(false);
-          alert("Chat Connection Error: " + (error.message || "Unknown error") + "\nPlease check your API keys or console for details.");
         }
       }
     };

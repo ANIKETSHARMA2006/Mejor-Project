@@ -108,8 +108,8 @@ function getSessionUserId(req) {
 function setSessionCookie(res, userId) {
     res.cookie(sessionCookieName, createSessionToken(userId), {
         httpOnly: true,
-        sameSite: "lax",
-        secure: process.env.NODE_ENV === "production",
+        sameSite: "none",
+        secure: true,
         maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 }
