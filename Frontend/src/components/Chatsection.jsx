@@ -3,6 +3,8 @@ import bot from "../assets/white-robo.svg";
 
 export const defaultMessages = [];
 
+import ReactMarkdown from 'react-markdown';
+
 const Chatsection = ({ messages = defaultMessages }) => {
   return (
     <section className="w-270 mx-auto h-[74%] border-x border-[#4c4c4c] bg-black/20 px-8 py-6 overflow-y-auto">
@@ -35,7 +37,11 @@ const Chatsection = ({ messages = defaultMessages }) => {
                     Ultron AI
                   </p>
                 )}
-                <p>{message.text}</p>
+                {isUser ? (
+                  <p>{message.text}</p>
+                ) : (
+                  <ReactMarkdown>{message.text}</ReactMarkdown>
+                )}
               </div>
 
               {isUser && (
