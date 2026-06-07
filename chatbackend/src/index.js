@@ -120,6 +120,7 @@ app.post("/start-ai-agent", requireApiAuth, async (req, res) => {
             await serverClient.upsertUser({
                 id: user_id,
                 name: "AI Writing Assistant",
+                role: "admin",
             });
 
             const channel = serverClient.channel(channel_type, channel_id);
