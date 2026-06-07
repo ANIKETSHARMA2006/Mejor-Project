@@ -4,6 +4,7 @@ import whiterobo from "../assets/white-robo.svg";
 const Header = () => {
 
   function handleClick() {
+    sessionStorage.removeItem('chat_session_id');
     window.location.reload();
   }
 

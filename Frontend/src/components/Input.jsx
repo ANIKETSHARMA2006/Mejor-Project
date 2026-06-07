@@ -58,40 +58,44 @@ const Input = ({ inputRef, handleSubmit }) => {
     <div>
       <form
         onSubmit={handleSubmit}
-        className="w-312.5 mx-auto h-23 rounded-b-xl border flex items-center border-[#4c4c4c]"
+        className="w-312.5 mx-auto h-23 rounded-b-xl border flex items-center justify-center border-[#4c4c4c] px-4"
       >
-        <input
-          placeholder="How can I help you? Write your question here."
-          className="bg-[#000000] w-[100%] border border-white hover:border-[#7c3aed] hover:border-3 h-[65%] text-white text-m p-5 rounded-4xl mx-4"
-          type="text"
-          ref={inputRef}
-        />
+        <div className="relative w-full h-[65%] flex items-center">
+          <input
+            placeholder="How can I help you? Write your question here."
+            className="bg-[#000000] w-full border-2 border-white hover:border-[#7c3aed] h-full text-white text-m py-5 pl-5 pr-24 rounded-4xl outline-none"
+            type="text"
+            ref={inputRef}
+          />
 
-        {/* Mic / Stop Button */}
-        {isListening ? (
-          <button
-            type="button"
-            onClick={stopListening}
-            className="flex items-center justify-center h-[65%] w-[5%] cursor-pointer"
-          >
-            <img className="w-7" src={Stop} alt="stop button" />
-          </button>
-        ) : (
-          <button
-            type="button"
-            onClick={startListening}
-            className="flex items-center justify-center h-[65%] w-[5%] cursor-pointer"
-          >
-            <img className="w-7" src={Mic} alt="mic button" />
-          </button>
-        )}
+          <div className="absolute right-3 flex items-center gap-1">
+            {/* Mic / Stop Button */}
+            {isListening ? (
+              <button
+                type="button"
+                onClick={stopListening}
+                className="flex items-center justify-center cursor-pointer p-2 rounded-full hover:bg-white/10 transition"
+              >
+                <img className="w-6" src={Stop} alt="stop button" />
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={startListening}
+                className="flex items-center justify-center cursor-pointer p-2 rounded-full hover:bg-white/10 transition"
+              >
+                <img className="w-6" src={Mic} alt="mic button" />
+              </button>
+            )}
 
-        <button
-          type="submit"
-          className="flex items-center justify-center h-[55%] w-[5%] mx-5 mr-8 cursor-pointer"
-        >
-          <img className="w-9 ml-3" src={Search} alt="search button" />
-        </button>
+            <button
+              type="submit"
+              className="flex items-center justify-center cursor-pointer p-2 rounded-full hover:bg-white/10 transition"
+            >
+              <img className="w-7" src={Search} alt="search button" />
+            </button>
+          </div>
+        </div>
       </form>
     </div>
   );

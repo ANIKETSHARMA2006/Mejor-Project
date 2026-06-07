@@ -28,7 +28,23 @@ class GeminiAgent {
             // We use the 1.5 flash model which is very fast and suitable for general chat
             this.model = this.genAI.getGenerativeModel({ model: "gemini-3.5-flash" });
 
-            this.chatClient.on("message.new", this.handleMessage);
+            this.channel.on("message.new", this.handleMessage);
+
+            // Check if there are any unreplied messages from the user
+            // Check if there are any unreplied messages from the user
+            try {
+                const messages = this.channel.state?.messages || [];
+                if (messages.length > 0) {
+                    const lastMessage = messages[messages.length - 1];
+                    // If the last message is from a user, process it
+                    if (!lastMessage.ai_generated && (!lastMessage.user || !lastMessage.user.id.startsWith('ai-bot'))) {
+                        console.log(`[GeminiAgent] Processing pending message on init: ${lastMessage.text}`);
+                        this.handleMessage({ message: lastMessage });
+                    }
+                }
+            } catch (err) {
+                console.error("Error checking for pending messages on init:", err);
+            }
         };
 
         this.getSystemInstruction = (context) => {
@@ -46,8 +62,10 @@ class GeminiAgent {
 **Response Format:**
 - Be direct and production-ready.
 - Use clear formatting.
+- **CRITICAL: Keep your responses concise and strictly under 4500 characters in length.**
 - Never begin responses with phrases like "Here's the edit:", "Here are the changes:", or similar introductory statements.
 - Provide responses directly and professionally without unnecessary preambles.
+- **Behavior on Greetings:** If the user just says a simple greeting (like "hi", "hello", "hey"), respond with a very short, simple, and friendly greeting (e.g., "Hello! How can I help you today?"). Do not elaborate, do not mention past templates, and do not write long paragraphs.
 
 **Writing Context**: ${context || "General writing assistance."}`;
         };
@@ -68,6 +86,7 @@ class GeminiAgent {
             if (!message) return;
 
             console.log(`[GeminiAgent] Received message from user: ${message}`);
+            require('fs').appendFileSync('b:\\\\Coding\\\\WebMainProject\\\\Mejor-Project\\\\chatbackend\\\\debug.log', `[GeminiAgent] Received message: ${message}\\n`);
             this.lastInteractionTs = Date.now();
 
             const writingTask = eventMessage.custom?.writingTask;
@@ -76,11 +95,11 @@ class GeminiAgent {
 
             try {
                 // To maintain context, we fetch recent messages from the channel
-                const channelState = await this.channel.query({ messages: { limit: 20 } });
+                const messages = this.channel.state?.messages || [];
                 
                 // Convert stream chat history to Gemini history format
                 const history = [];
-                for (const msg of channelState.messages) {
+                for (const msg of messages) {
                     if (msg.id === eventMessage.id) continue; // Skip the current message we are about to process
                     if (!msg.text) continue;
 
@@ -92,8 +111,8 @@ class GeminiAgent {
 
                 // Add system instructions as the very first user message for context
                 if (history.length === 0 || history[0].role !== "user") {
-                    history.unshift({ role: "user", parts: [{ text: "System Instructions: " + instructions }] });
                     history.unshift({ role: "model", parts: [{ text: "Understood. I will act as the writing assistant." }] });
+                    history.unshift({ role: "user", parts: [{ text: "System Instructions: " + instructions }] });
                 }
 
                 // Create the chat session
