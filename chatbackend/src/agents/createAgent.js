@@ -12,7 +12,7 @@ const createAgent = async (
 ) => {
     const token = serverClient.createToken(user_id);
     // This is the client for the AI bot user
-    const chatClient = StreamChat.getInstance(apiKey, undefined, {
+    const chatClient = new StreamChat(apiKey, {
         allowServerSideConnect: true,
         timeout: 60000
     });
