@@ -54,7 +54,7 @@ const Input = ({ inputRef, handleSubmit }) => {
   };
 
   return (
-    <div>
+    <>
       <form
         onSubmit={handleSubmit}
         className="w-[95%] max-w-[1250px] mx-auto h-20 md:h-23 rounded-b-xl border flex items-center justify-center border-[#4c4c4c] px-2 md:px-4"
@@ -96,7 +96,7 @@ const Input = ({ inputRef, handleSubmit }) => {
           </div>
         </div>
       </form>
-    </div>
+    </>
   );
 };
 
