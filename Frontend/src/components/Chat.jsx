@@ -153,8 +153,8 @@ const Chat = () => {
   }
 
   return (
-    <div className='relative z-0 w-full h-screen flex justify-center items-center flex-col'>
-      <div className='absolute z-[-1] w-175 h-145 pointer-events-none bg-purple-700/30 rounded-full blur-[140px] top-[50%] left-1/2 -translate-x-1/2 -translate-y-1/2 animate-glow'></div>
+    <div className='relative z-0 w-full h-screen flex justify-center items-center flex-col overflow-hidden'>
+      <div className='absolute z-[-1] w-72 h-72 md:w-175 md:h-145 pointer-events-none bg-purple-700/30 rounded-full blur-[100px] md:blur-[140px] top-[50%] left-1/2 -translate-x-1/2 -translate-y-1/2 animate-glow'></div>
       <StarsBackground />
       <Header />
       {messages.length>0?<Chatsection messages={messages} />:<Open inputRef={inputRef} username={client?.user?.id} />}

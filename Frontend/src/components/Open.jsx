@@ -17,37 +17,37 @@ const Open = ({inputRef, username}) => {
   const displayUsername = username ? username.charAt(0).toUpperCase() + username.slice(1) : "";
 
   return (
-    <div className="w-312.5 mx-auto h-[74%] overflow-x-hidden border-x border-[#4c4c4c]">
+    <div className="w-[95%] max-w-[1250px] mx-auto h-[74%] overflow-x-hidden border-x border-[#4c4c4c] px-4 md:px-8">
       <div className="flex flex-col items-center gap-2">
         <img
-          className=" h-17 w-17 mt-5 p-3 rounded-2xl bg-[#000000]"
+          className="h-14 w-14 md:h-17 md:w-17 mt-5 p-3 rounded-2xl bg-[#000000]"
           src={bot}
           alt="image"
         />
-        <h2 className="text-4xl font-serif text-[#e2e8f0] mx-auto mt-2 tracking-wide">
+        <h2 className="text-2xl md:text-4xl font-serif text-[#e2e8f0] mx-auto mt-2 tracking-wide text-center">
           {getGreeting()}{displayUsername ? `, ${displayUsername}` : ""}
         </h2>
-        <p className="text-[#94a3b8] font-semibold ">
+        <p className="text-[#94a3b8] font-semibold text-center text-sm md:text-base">
           From first draft to final edit, i'm here to help you write better,
           faster.
         </p>
-        <h2 className=" text-xl mt-10 font-bold text-white mx-auto">
+        <h2 className="text-lg md:text-xl mt-6 md:mt-10 font-bold text-white mx-auto text-center">
           What would you like to write today?
         </h2>
-        <div className="grid grid-cols-2 gap-4 mt-10 text-white p-2">
-          <button onClick={handleClick} className="py-6 px-10 bg-black rounded-2xl text-sm cursor-pointer hover:border hover:border-violet-600 transition-all duration-300">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 mt-6 md:mt-10 text-white p-2 w-full max-w-4xl">
+          <button onClick={handleClick} className="py-4 md:py-6 px-6 md:px-10 bg-black rounded-2xl text-xs md:text-sm cursor-pointer hover:border hover:border-violet-600 transition-all duration-300">
             Write a professional email to my boss about a project update
           </button>
 
-          <button onClick={handleClick} className="py-6 px-10 bg-black rounded-2xl text-sm cursor-pointer hover:border hover:border-violet-600 transition-all duration-300">
+          <button onClick={handleClick} className="py-4 md:py-6 px-6 md:px-10 bg-black rounded-2xl text-xs md:text-sm cursor-pointer hover:border hover:border-violet-600 transition-all duration-300">
             Draft a compelling LinkedIn post about a recent achievement
           </button>
 
-          <button onClick={handleClick} className="py-6 px-10 bg-black rounded-2xl text-sm cursor-pointer hover:border hover:border-violet-600 transition-all duration-300">
+          <button onClick={handleClick} className="py-4 md:py-6 px-6 md:px-10 bg-black rounded-2xl text-xs md:text-sm cursor-pointer hover:border hover:border-violet-600 transition-all duration-300">
             Create an executive summary for a quarterly business report
           </button>
 
-          <button onClick={handleClick} className="py-6 px-10 bg-black rounded-2xl text-sm cursor-pointer hover:border hover:border-violet-600 transition-all duration-300">
+          <button onClick={handleClick} className="py-4 md:py-6 px-6 md:px-10 bg-black rounded-2xl text-xs md:text-sm cursor-pointer hover:border hover:border-violet-600 transition-all duration-300">
             Write a persuasive proposal for a new marketing campaign
           </button>
         </div>
