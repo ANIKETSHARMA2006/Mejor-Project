@@ -26,7 +26,7 @@ class GeminiAgent {
 
             this.genAI = new GoogleGenerativeAI(apiKey);
             // We use the 1.5 flash model which is very fast and suitable for general chat
-            this.model = this.genAI.getGenerativeModel({ model: "gemini-3.5-flash" });
+            this.model = this.genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
             this.channel.on("message.new", this.handleMessage);
 

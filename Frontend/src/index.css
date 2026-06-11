@@ -1,6 +1,9 @@
 @import "tailwindcss";
 
 @theme {
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Petrona", ui-serif, Georgia, serif;
+
   --animate-glow: glow 3s ease-in-out infinite;
 
   @keyframes glow {
