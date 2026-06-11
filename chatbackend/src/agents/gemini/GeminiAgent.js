@@ -97,7 +97,7 @@ class GeminiAgent {
             try {
                 // Dynamically instantiate the model to pass dynamic system instructions
                 const model = this.genAI.getGenerativeModel({
-                    model: "gemini-1.5-flash",
+                    model: "gemini-3.5-flash",
                     systemInstruction: instructions,
                 });
 
