@@ -93,39 +93,67 @@ class GeminiAgent {
             const context = writingTask ? `Writing Task: ${writingTask}` : undefined;
             const instructions = this.getSystemInstruction(context);
 
+            let channelMessage = null;
             try {
+                // Dynamically instantiate the model to pass dynamic system instructions
+                const model = this.genAI.getGenerativeModel({
+                    model: "gemini-1.5-flash",
+                    systemInstruction: instructions,
+                });
+
                 // To maintain context, we fetch recent messages from the channel
                 const messages = this.channel.state?.messages || [];
                 
-                // Convert stream chat history to Gemini history format
-                const history = [];
+                // Group consecutive messages with the same role to prevent Gemini API errors
+                const rawHistory = [];
                 for (const msg of messages) {
-                    if (msg.id === eventMessage.id) continue; // Skip the current message we are about to process
+                    if (msg.id === eventMessage.id) continue; // Skip the current message
                     if (!msg.text) continue;
-
-                    history.push({
-                        role: msg.ai_generated || msg.user.id.startsWith('ai-bot') ? "model" : "user",
-                        parts: [{ text: msg.text }],
-                    });
+                    const role = msg.ai_generated || msg.user.id.startsWith('ai-bot') ? "model" : "user";
+                    rawHistory.push({ role, text: msg.text });
                 }
 
-                // Add system instructions as the very first user message for context
-                if (history.length === 0 || history[0].role !== "user") {
-                    history.unshift({ role: "model", parts: [{ text: "Understood. I will act as the writing assistant." }] });
-                    history.unshift({ role: "user", parts: [{ text: "System Instructions: " + instructions }] });
+                const history = [];
+                let currentRole = null;
+                let currentText = "";
+
+                for (const item of rawHistory) {
+                    if (item.role === currentRole) {
+                        currentText += "\n\n" + item.text;
+                    } else {
+                        if (currentRole) {
+                            history.push({ role: currentRole, parts: [{ text: currentText }] });
+                        }
+                        currentRole = item.role;
+                        currentText = item.text;
+                    }
+                }
+                if (currentRole) {
+                    history.push({ role: currentRole, parts: [{ text: currentText }] });
+                }
+
+                // Ensure history starts with 'user'
+                if (history.length > 0 && history[0].role === "model") {
+                    history.unshift({ role: "user", parts: [{ text: "Hello." }] });
+                }
+
+                // Ensure history ends with 'model' before we send a new 'user' message
+                if (history.length > 0 && history[history.length - 1].role === "user") {
+                    history.push({ role: "model", parts: [{ text: "Okay." }] });
                 }
 
                 // Create the chat session
-                const chat = this.model.startChat({
+                const chat = model.startChat({
                     history: history,
                 });
 
                 // Send an empty AI message to show the UI loading state
-                const { message: channelMessage } = await this.channel.sendMessage({
+                const response = await this.channel.sendMessage({
                     text: "",
                     ai_generated: true,
                     user_id: this.chatClient.user.id,
                 });
+                channelMessage = response.message;
 
                 await this.channel.sendEvent({
                     type: "ai_indicator.update",
@@ -150,6 +178,21 @@ class GeminiAgent {
 
             } catch (error) {
                 console.error("Failed to process message with Gemini:", error);
+                if (channelMessage) {
+                    try {
+                        await this.channel.sendEvent({
+                            type: "ai_indicator.update",
+                            ai_state: "AI_STATE_ERROR",
+                            cid: channelMessage.cid,
+                            message_id: channelMessage.id,
+                        });
+                        await this.chatClient.partialUpdateMessage(channelMessage.id, {
+                            set: { text: "⚠️ AI Error: " + (error.message || "Failed to generate response. Please try again.") }
+                        });
+                    } catch (e) {
+                        console.error("Failed to send error fallback to UI:", e);
+                    }
+                }
             }
         };
 
