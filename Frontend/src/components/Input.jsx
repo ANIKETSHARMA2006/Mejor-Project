@@ -57,7 +57,7 @@ const Input = ({ inputRef, handleSubmit }) => {
     <>
       <form
         onSubmit={handleSubmit}
-        className="w-[95%] max-w-[1250px] mx-auto h-20 md:h-23 rounded-b-xl border flex items-center justify-center border-[#4c4c4c] px-2 md:px-4"
+        className="w-[95%] max-w-[1250px] mx-auto h-20 md:h-23 rounded-b-xl border flex items-center justify-center border-[#4c4c4c] px-2 md:px-4 shrink-0"
       >
         <div className="relative w-full h-[65%] flex items-center">
           <input
