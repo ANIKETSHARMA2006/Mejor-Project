@@ -1,5 +1,6 @@
 # Dependencies
 node_modules/
+node_modules
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -9,6 +10,7 @@ dist/
 build/
 
 # Environment variables
+.env
 .env
 .env.local
 .env.development.local
@@ -87,3 +89,4 @@ jspm_packages/
 .Trashes
 ehthumbs.db
 Thumbs.db
+dist

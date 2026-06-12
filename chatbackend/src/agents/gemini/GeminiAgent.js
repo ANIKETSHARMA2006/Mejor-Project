@@ -26,7 +26,7 @@ class GeminiAgent {
 
             this.genAI = new GoogleGenerativeAI(apiKey);
             // We use the 1.5 flash model which is very fast and suitable for general chat
-            this.model = this.genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+            this.model = this.genAI.getGenerativeModel({ model: "gemini-3.5-flash" });
 
             this.channel.on("message.new", this.handleMessage);
 
@@ -142,11 +142,6 @@ class GeminiAgent {
                     history.push({ role: "model", parts: [{ text: "Okay." }] });
                 }
 
-                // Create the chat session
-                const chat = model.startChat({
-                    history: history,
-                });
-
                 // Send an empty AI message to show the UI loading state
                 const response = await this.channel.sendMessage({
                     text: "",
@@ -162,8 +157,34 @@ class GeminiAgent {
                     message_id: channelMessage.id,
                 });
 
-                // Send the new message to Gemini and stream the result
-                const resultStream = await chat.sendMessageStream(message);
+                // Fallback mechanism to handle 503 High Demand errors
+                const modelsToTry = ["gemini-3.5-flash", "gemini-flash-latest", "gemini-2.5-flash"];
+                let resultStream = null;
+                let lastError = null;
+
+                for (const modelName of modelsToTry) {
+                    try {
+                        const model = this.genAI.getGenerativeModel({
+                            model: modelName,
+                            systemInstruction: instructions,
+                        });
+                        
+                        const chat = model.startChat({
+                            history: history,
+                        });
+
+                        resultStream = await chat.sendMessageStream(message);
+                        console.log(`[GeminiAgent] Successfully connected using model: ${modelName}`);
+                        break; // Success! Exit the loop
+                    } catch (err) {
+                        console.log(`[GeminiAgent] Model ${modelName} failed:`, err.message);
+                        lastError = err;
+                    }
+                }
+
+                if (!resultStream) {
+                    throw lastError; // If all models failed, throw the last error
+                }
 
                 const handler = new GeminiResponseHandler(
                     resultStream.stream,
