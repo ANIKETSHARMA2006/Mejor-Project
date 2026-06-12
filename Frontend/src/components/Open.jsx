@@ -17,7 +17,7 @@ const Open = ({inputRef, username}) => {
   const displayUsername = username ? username.charAt(0).toUpperCase() + username.slice(1) : "";
 
   return (
-    <div className="w-[95%] max-w-[1250px] mx-auto flex-1 overflow-y-auto overflow-x-hidden border-x border-[#4c4c4c] px-4 md:px-8">
+    <div className="w-[95%] max-w-[1250px] mx-auto flex-1 min-h-0 overflow-y-auto overflow-x-hidden border-x border-[#4c4c4c] px-4 md:px-8">
       <div className="flex flex-col items-center gap-2 pb-6">
         <img
           className="h-14 w-14 md:h-17 md:w-17 mt-5 p-3 rounded-2xl bg-[#000000]"

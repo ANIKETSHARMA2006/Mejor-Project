@@ -7,7 +7,7 @@ import ReactMarkdown from 'react-markdown';
 
 const Chatsection = ({ messages = defaultMessages }) => {
   return (
-    <section className="w-[95%] max-w-[1250px] mx-auto flex-1 border-x border-[#4c4c4c] bg-black/20 px-4 md:px-8 py-6 overflow-x-hidden overflow-y-auto">
+    <section className="w-[95%] max-w-[1250px] mx-auto flex-1 min-h-0 border-x border-[#4c4c4c] bg-black/20 px-4 md:px-8 py-6 overflow-x-hidden overflow-y-auto">
       <div className="flex min-h-full flex-col justify-end gap-5">
         {messages.map((message) => {
           const isUser = message.role === "user";
