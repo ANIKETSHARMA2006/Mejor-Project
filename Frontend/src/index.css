@@ -31,11 +31,11 @@
   }
 
   @keyframes loading_713 {
-    0% { width: 16px; transform: translateX(0px); }
-    40% { width: 100%; transform: translateX(0px); }
-    80% { width: 16px; transform: translateX(64px); }
-    90% { width: 100%; transform: translateX(0px); }
-    100% { width: 16px; transform: translateX(0px); }
+    0% { width: 16px; left: 0px; }
+    40% { width: 100%; left: 0px; }
+    80% { width: 16px; left: calc(100% - 16px); }
+    90% { width: 100%; left: 0px; }
+    100% { width: 16px; left: 0px; }
   }
 
   @keyframes loading2_713 {

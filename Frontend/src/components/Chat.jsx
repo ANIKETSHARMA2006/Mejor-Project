@@ -144,10 +144,10 @@ const Chat = () => {
   if (isCheckingAuth) {
     return (
       <div className='w-full h-[100dvh] flex justify-center items-center bg-black text-white'>
-        <div className="flex flex-col items-center justify-between h-[50px]">
+        <div className="inline-flex flex-col items-center justify-between h-[50px] w-fit">
           <span className="text-[#C8B6FF] text-[0.8rem] tracking-[1px] font-bold">LOADING</span>
-          <div className="relative w-[80px] h-[16px]">
-            <span className="absolute bottom-0 left-0 bg-[#9A79FF] rounded-[50px] block h-[16px] w-[16px] translate-x-[64px] animate-loading_713 before:absolute before:top-0 before:left-0 before:content-[''] before:w-full before:h-full before:bg-[#D1C2FF] before:rounded-[inherit] before:animate-loading2_713"></span>
+          <div className="relative w-full h-[16px]">
+            <span className="absolute bottom-0 left-0 bg-[#9A79FF] rounded-[50px] block h-[16px] w-[16px] animate-loading_713 before:absolute before:top-0 before:left-0 before:content-[''] before:w-full before:h-full before:bg-[#D1C2FF] before:rounded-[inherit] before:animate-loading2_713"></span>
           </div>
         </div>
       </div>
