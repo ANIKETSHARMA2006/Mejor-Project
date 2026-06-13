@@ -153,7 +153,7 @@ const Chat = () => {
   }
 
   return (
-    <div className='relative z-0 w-full h-[100dvh] flex justify-center items-center flex-col overflow-hidden py-2 md:py-6'>
+    <div className='relative z-0 w-full h-[100dvh] flex justify-center items-center flex-col overflow-hidden'>
       <div className='absolute z-[-1] w-72 h-72 md:w-175 md:h-145 pointer-events-none bg-purple-700/30 rounded-full blur-[100px] md:blur-[140px] top-[50%] left-1/2 -translate-x-1/2 -translate-y-1/2 animate-glow'></div>
       <StarsBackground />
       <Header />
