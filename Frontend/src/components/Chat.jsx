@@ -145,8 +145,8 @@ const Chat = () => {
     return (
       <div className='w-full h-[100dvh] flex justify-center items-center bg-black text-white'>
         <div className="w-[80px] h-[50px] relative">
-          <span className="absolute top-0 p-0 m-0 text-[#C8B6FF] animate-text_713 text-[0.8rem] tracking-[1px]">loading</span>
-          <span className="bg-[#9A79FF] rounded-[50px] block h-[16px] w-[16px] bottom-0 absolute translate-x-[64px] animate-loading_713 before:absolute before:content-[''] before:w-full before:h-full before:bg-[#D1C2FF] before:rounded-[inherit] before:animate-loading2_713"></span>
+          <span className="absolute top-0 left-0 p-0 m-0 text-[#C8B6FF] animate-text_713 text-[0.8rem] tracking-[1px] uppercase font-bold">loading</span>
+          <span className="absolute bottom-0 left-0 bg-[#9A79FF] rounded-[50px] block h-[16px] w-[16px] translate-x-[64px] animate-loading_713 before:absolute before:top-0 before:left-0 before:content-[''] before:w-full before:h-full before:bg-[#D1C2FF] before:rounded-[inherit] before:animate-loading2_713"></span>
         </div>
       </div>
     );
