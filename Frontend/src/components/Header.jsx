@@ -34,8 +34,18 @@ const Header = () => {
         </div>
       </div>
       <div className="btn-con flex items-center gap-2 md:gap-3 mr-4 md:mr-8">
-        <button onClick={handleClick} className="text-white text-xs md:text-sm px-3 md:px-4 rounded-xl md:rounded-2xl py-1.5 md:py-2 bg-[#7c3aed] hover:bg-violet-600 transition-colors">New Session</button>
-        <button onClick={handleLogout} className="text-white text-xs md:text-sm px-3 md:px-4 rounded-xl md:rounded-2xl py-1.5 md:py-2 bg-red-600 hover:bg-red-700 transition-colors">Logout</button>
+        <button 
+          onClick={handleClick} 
+          className="relative z-0 group bg-transparent cursor-pointer overflow-hidden rounded-xl md:rounded-2xl border-2 border-[#7c3aed] text-white transition-all duration-500 ease-in-out hover:shadow-[0_0_20px_#7c3aed] px-3 md:px-5 py-1.5 md:py-2.5 after:content-[''] after:absolute after:left-0 after:top-0 after:transition-all after:duration-500 after:ease-in-out after:bg-[#7c3aed] after:rounded-[30px] after:invisible after:h-[10px] after:w-[10px] after:-z-10 group-hover:after:visible group-hover:after:scale-[100] group-hover:after:translate-x-[2px] flex items-center justify-center"
+        >
+          <span className="relative z-10 text-[10px] md:text-xs font-extrabold tracking-[2px] md:tracking-[4px]">NEW SESSION</span>
+        </button>
+        <button 
+          onClick={handleLogout} 
+          className="relative z-0 group bg-transparent cursor-pointer overflow-hidden rounded-xl md:rounded-2xl border-2 border-[#dc2626] text-white transition-all duration-500 ease-in-out hover:shadow-[0_0_20px_#dc2626] px-3 md:px-5 py-1.5 md:py-2.5 after:content-[''] after:absolute after:left-0 after:top-0 after:transition-all after:duration-500 after:ease-in-out after:bg-[#dc2626] after:rounded-[30px] after:invisible after:h-[10px] after:w-[10px] after:-z-10 group-hover:after:visible group-hover:after:scale-[100] group-hover:after:translate-x-[2px] flex items-center justify-center"
+        >
+          <span className="relative z-10 text-[10px] md:text-xs font-extrabold tracking-[2px] md:tracking-[4px]">LOGOUT</span>
+        </button>
       </div>
     </div>
   );
