@@ -6,9 +6,9 @@
 
   --animate-glow: glow 3s ease-in-out infinite;
 
-  --animate-text_713: text_713 3.5s ease both infinite;
-  --animate-loading_713: loading_713 3.5s ease both infinite;
-  --animate-loading2_713: loading2_713 3.5s ease both infinite;
+  --animate-text_713: text_713 1.5s ease both infinite;
+  --animate-loading_713: loading_713 1.5s ease both infinite;
+  --animate-loading2_713: loading2_713 1.5s ease both infinite;
 
   @keyframes glow {
     0%, 100% {
