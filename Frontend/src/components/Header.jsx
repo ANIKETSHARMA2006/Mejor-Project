@@ -33,18 +33,24 @@ const Header = () => {
           </p>
         </div>
       </div>
-      <div className="btn-con flex items-center gap-2 md:gap-3 mr-4 md:mr-8">
+      <div className="btn-con flex items-center gap-3 md:gap-4 mr-4 md:mr-8">
         <button 
           onClick={handleClick} 
-          className="relative z-0 group bg-transparent cursor-pointer overflow-hidden rounded-xl md:rounded-2xl border-2 border-[#7c3aed] text-white transition-all duration-500 ease-in-out hover:shadow-[0_0_20px_#7c3aed] px-3 md:px-5 py-1.5 md:py-2.5 after:content-[''] after:absolute after:left-0 after:top-0 after:transition-all after:duration-500 after:ease-in-out after:bg-[#7c3aed] after:rounded-[30px] after:invisible after:h-[10px] after:w-[10px] after:-z-10 group-hover:after:visible group-hover:after:scale-[100] group-hover:after:translate-x-[2px] flex items-center justify-center"
+          className="relative inline-flex h-8 md:h-10 overflow-hidden rounded-xl md:rounded-2xl p-[2px] focus:outline-none group transition-transform active:scale-95 hover:shadow-[0_0_15px_rgba(124,58,237,0.5)]"
         >
-          <span className="relative z-10 text-[10px] md:text-xs font-extrabold tracking-[2px] md:tracking-[4px]">NEW SESSION</span>
+          <span className="absolute inset-[-1000%] animate-[spin_3s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#4c1d95_0%,#c4b5fd_50%,#4c1d95_100%)]" />
+          <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-[10px] md:rounded-[14px] bg-[#0a0b14] px-3 md:px-5 text-[10px] md:text-xs font-extrabold tracking-[2px] md:tracking-[3px] text-white backdrop-blur-3xl transition-colors group-hover:bg-[#111322]">
+            NEW SESSION
+          </span>
         </button>
         <button 
           onClick={handleLogout} 
-          className="relative z-0 group bg-transparent cursor-pointer overflow-hidden rounded-xl md:rounded-2xl border-2 border-[#dc2626] text-white transition-all duration-500 ease-in-out hover:shadow-[0_0_20px_#dc2626] px-3 md:px-5 py-1.5 md:py-2.5 after:content-[''] after:absolute after:left-0 after:top-0 after:transition-all after:duration-500 after:ease-in-out after:bg-[#dc2626] after:rounded-[30px] after:invisible after:h-[10px] after:w-[10px] after:-z-10 group-hover:after:visible group-hover:after:scale-[100] group-hover:after:translate-x-[2px] flex items-center justify-center"
+          className="relative inline-flex h-8 md:h-10 overflow-hidden rounded-xl md:rounded-2xl p-[2px] focus:outline-none group transition-transform active:scale-95 hover:shadow-[0_0_15px_rgba(220,38,38,0.5)]"
         >
-          <span className="relative z-10 text-[10px] md:text-xs font-extrabold tracking-[2px] md:tracking-[4px]">LOGOUT</span>
+          <span className="absolute inset-[-1000%] animate-[spin_3s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#7f1d1d_0%,#fca5a5_50%,#7f1d1d_100%)]" />
+          <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-[10px] md:rounded-[14px] bg-[#0a0b14] px-3 md:px-5 text-[10px] md:text-xs font-extrabold tracking-[2px] md:tracking-[3px] text-white backdrop-blur-3xl transition-colors group-hover:bg-[#1a0f0f]">
+            LOGOUT
+          </span>
         </button>
       </div>
     </div>
