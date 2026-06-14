@@ -62,7 +62,7 @@ const Input = ({ inputRef, handleSubmit }) => {
         <div className="relative w-full max-w-5xl mx-auto h-[65%] flex items-center">
           <input
             placeholder="How can I help you? Write your question here."
-            className="bg-[#000000] w-full border-2 border-white hover:border-[#7c3aed] h-full text-white text-sm md:text-base py-3 md:py-5 pl-4 md:pl-5 pr-[80px] md:pr-24 rounded-4xl outline-none"
+            className="bg-[#000000] w-full border-2 border-white hover:border-[#7c3aed] h-full text-white text-sm md:text-base py-3 md:py-5 pl-4 md:pl-5 pr-[110px] md:pr-[120px] rounded-4xl outline-none"
             type="text"
             ref={inputRef}
           />
