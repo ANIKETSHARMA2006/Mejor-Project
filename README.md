@@ -13,7 +13,9 @@ ULTRON is an intelligent, full-stack AI Writing Assistant designed to help users
 
 - **Real-Time AI Chat:** Instant, real-time communication with the ULTRON AI bot using Stream Chat.
 - **Advanced Language Model:** Powered by Google's Gemini 1.5 Flash for high-quality, contextual responses.
-- **Fully Responsive UI:** A beautifully crafted, modern UI (Tailwind CSS) that perfectly adapts to Mobile, Tablet, and Desktop screens.
+- **Premium UI & Animations:** Beautifully crafted modern UI featuring Vite-style animated glowing borders, smooth hover effects, and interactive tap states.
+- **Fully Responsive:** Flawlessly adapts to Mobile, Tablet, and Desktop screens with pixel-perfect layout and padding.
+- **Custom Loading States:** Highly responsive, CSS-animated loader that dynamically adjusts to text width.
 - **Secure Authentication:** Built-in session management and user authentication.
 - **Voice Input (Mic):** Integrated browser Speech-to-Text for hands-free typing.
 - **Markdown Support:** Renders rich text, code blocks, and formatted lists in AI responses.
