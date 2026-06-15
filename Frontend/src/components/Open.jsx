@@ -24,7 +24,7 @@ const Open = ({inputRef, username}) => {
           src={bot}
           alt="image"
         />
-        <h2 className="text-2xl md:text-4xl font-serif text-[#e2e8f0] mx-auto mt-2 tracking-wide text-center">
+        <h2 className="text-2xl md:text-4xl font-serif font-bold text-[#e2e8f0] mx-auto mt-2 tracking-wide text-center">
           {getGreeting()}{displayUsername ? `, ${displayUsername}` : ""}
         </h2>
         <p className="text-[#94a3b8] font-semibold text-center text-sm md:text-base">
