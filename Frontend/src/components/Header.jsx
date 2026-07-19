@@ -8,8 +8,9 @@ const Header = () => {
     window.location.reload();
   }
 
-  function handleLogout() {
+  const handleLogout = () => {
     sessionStorage.removeItem('chat_session_id');
+    localStorage.removeItem('mejor_session_token');
     const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || (window.location.hostname === 'localhost' ? 'http://localhost:3001' : 'https://mejor-backend.onrender.com');
     window.location.href = `${API_BASE_URL}/logout`;
   }

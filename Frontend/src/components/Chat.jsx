@@ -24,8 +24,22 @@ const Chat = () => {
       try {
         const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || (window.location.hostname === 'localhost' ? 'http://localhost:3001' : 'https://mejor-backend.onrender.com');
 
-        // Fetch token from backend using session cookie
-        const response = await axios.post(`${API_BASE_URL}/token`, {}, { withCredentials: true });
+        // Extract session token from URL if present
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlToken = urlParams.get('session_token');
+        if (urlToken) {
+            localStorage.setItem('mejor_session_token', urlToken);
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+
+        const sessionToken = localStorage.getItem('mejor_session_token');
+        const axiosConfig = {
+            withCredentials: true,
+            headers: sessionToken ? { Authorization: `Bearer ${sessionToken}` } : {}
+        };
+
+        // Fetch token from backend using session cookie or Bearer token
+        const response = await axios.post(`${API_BASE_URL}/token`, {}, axiosConfig);
         const { token, userId } = response.data;
 
         // Initialize Stream Client
@@ -61,7 +75,7 @@ const Chat = () => {
         setIsCheckingAuth(false);
 
         // Start AI agent on backend in the background (no await)
-        axios.post(`${API_BASE_URL}/start-ai-agent`, { channel_id: channelId }, { withCredentials: true })
+        axios.post(`${API_BASE_URL}/start-ai-agent`, { channel_id: channelId }, axiosConfig)
              .catch(err => console.error("Error starting AI agent:", err));
 
         // Listen for new messages

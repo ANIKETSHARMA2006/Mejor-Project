@@ -12,6 +12,7 @@ const {
     requireApiAuth,
     requirePageAuth,
     setSessionCookie,
+    createSessionToken,
 } = require("./auth");
 const { apiKey, serverClient } = require("./serverClient");
 
@@ -53,12 +54,18 @@ setInterval(async () => {
 }, 5000);
 
 app.get("/", (req, res) => {
-    res.redirect(req.user ? "https://mejor-project-sigma.vercel.app/" : "/login");
+    if (req.user) {
+        const token = createSessionToken(req.user.id);
+        res.redirect(`https://mejor-project-sigma.vercel.app/?session_token=${token}`);
+    } else {
+        res.redirect("/login");
+    }
 });
 
 app.get("/login", (req, res) => {
     if (req.user) {
-        res.redirect("https://mejor-project-sigma.vercel.app/");
+        const token = createSessionToken(req.user.id);
+        res.redirect(`https://mejor-project-sigma.vercel.app/?session_token=${token}`);
         return;
     }
     res.render("login", { error: "", username: "" });
@@ -70,7 +77,8 @@ app.post("/login", async (req, res) => {
     try {
         const user = await loginOrCreateUser(username, password);
         setSessionCookie(res, user.id);
-        res.redirect("https://mejor-project-sigma.vercel.app/");
+        const token = createSessionToken(user.id);
+        res.redirect(`https://mejor-project-sigma.vercel.app/?session_token=${token}`);
     } catch (error) {
         res.status(401).render("login", {
             error: error.message,

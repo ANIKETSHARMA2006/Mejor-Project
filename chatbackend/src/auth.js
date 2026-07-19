@@ -92,7 +92,12 @@ function createSessionToken(userId) {
 }
 
 function getSessionUserId(req) {
-    const token = req.cookies?.[sessionCookieName];
+    let token = req.cookies?.[sessionCookieName];
+
+    if (!token && req.headers.authorization?.startsWith("Bearer ")) {
+        token = req.headers.authorization.substring(7);
+    }
+
     if (!token) {
         return null;
     }
@@ -199,4 +204,5 @@ module.exports = {
     requireApiAuth,
     requirePageAuth,
     setSessionCookie,
+    createSessionToken,
 };
