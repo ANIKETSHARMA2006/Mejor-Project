@@ -35,19 +35,19 @@ const Open = ({inputRef, username}) => {
           What would you like to write today?
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 mt-6 md:mt-10 text-white p-2 w-full max-w-4xl">
-          <button onClick={handleClick} className="py-4 md:py-6 px-6 md:px-10 bg-black rounded-2xl text-xs md:text-sm cursor-pointer border border-transparent hover:border-violet-600 hover:bg-[#0a0b14] hover:-translate-y-1 hover:shadow-[0_4px_20px_rgba(124,58,237,0.2)] active:scale-95 active:bg-violet-900/30 transition-all duration-300">
+          <button onClick={handleClick} className="py-4 md:py-6 px-6 md:px-10 bg-[#212121] rounded-2xl text-xs md:text-sm cursor-pointer border border-transparent hover:border-violet-600 hover:bg-[#0a0b14] hover:-translate-y-1 hover:shadow-[0_4px_20px_rgba(124,58,237,0.2)] active:scale-95 active:bg-violet-900/30 transition-all duration-300">
             Write a professional email to my boss about a project update
           </button>
 
-          <button onClick={handleClick} className="py-4 md:py-6 px-6 md:px-10 bg-black rounded-2xl text-xs md:text-sm cursor-pointer border border-transparent hover:border-violet-600 hover:bg-[#0a0b14] hover:-translate-y-1 hover:shadow-[0_4px_20px_rgba(124,58,237,0.2)] active:scale-95 active:bg-violet-900/30 transition-all duration-300">
+          <button onClick={handleClick} className="py-4 md:py-6 px-6 md:px-10 bg-[#212121] rounded-2xl text-xs md:text-sm cursor-pointer border border-transparent hover:border-violet-600 hover:bg-[#0a0b14] hover:-translate-y-1 hover:shadow-[0_4px_20px_rgba(124,58,237,0.2)] active:scale-95 active:bg-violet-900/30 transition-all duration-300">
             Draft a compelling LinkedIn post about a recent achievement
           </button>
 
-          <button onClick={handleClick} className="py-4 md:py-6 px-6 md:px-10 bg-black rounded-2xl text-xs md:text-sm cursor-pointer border border-transparent hover:border-violet-600 hover:bg-[#0a0b14] hover:-translate-y-1 hover:shadow-[0_4px_20px_rgba(124,58,237,0.2)] active:scale-95 active:bg-violet-900/30 transition-all duration-300">
+          <button onClick={handleClick} className="py-4 md:py-6 px-6 md:px-10 bg-[#212121] rounded-2xl text-xs md:text-sm cursor-pointer border border-transparent hover:border-violet-600 hover:bg-[#0a0b14] hover:-translate-y-1 hover:shadow-[0_4px_20px_rgba(124,58,237,0.2)] active:scale-95 active:bg-violet-900/30 transition-all duration-300">
             Create an executive summary for a quarterly business report
           </button>
 
-          <button onClick={handleClick} className="py-4 md:py-6 px-6 md:px-10 bg-black rounded-2xl text-xs md:text-sm cursor-pointer border border-transparent hover:border-violet-600 hover:bg-[#0a0b14] hover:-translate-y-1 hover:shadow-[0_4px_20px_rgba(124,58,237,0.2)] active:scale-95 active:bg-violet-900/30 transition-all duration-300">
+          <button onClick={handleClick} className="py-4 md:py-6 px-6 md:px-10 bg-[#212121] rounded-2xl text-xs md:text-sm cursor-pointer border border-transparent hover:border-violet-600 hover:bg-[#0a0b14] hover:-translate-y-1 hover:shadow-[0_4px_20px_rgba(124,58,237,0.2)] active:scale-95 active:bg-violet-900/30 transition-all duration-300">
             Write a persuasive proposal for a new marketing campaign
           </button>
         </div>

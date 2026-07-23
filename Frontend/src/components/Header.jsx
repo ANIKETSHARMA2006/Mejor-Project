@@ -17,7 +17,7 @@ const Header = () => {
 
   return (
 
-    <div className="w-full border-b border-[#4c4c4c] flex items-center justify-between shrink-0 bg-black/20">
+    <div className="w-full border-b border-[#4c4c4c] flex items-center justify-between shrink-0 bg-[#212121]">
 
       <div className="flex items-center">
         <div className="p-2 md:p-3 pl-4 md:pl-7">
