@@ -24,14 +24,14 @@ const Open = ({inputRef, username}) => {
           src={bot}
           alt="image"
         />
-        <h2 className="text-2xl md:text-4xl font-serif font-bold text-[#e2e8f0] mx-auto mt-2 tracking-wide text-center">
+        <h2 className="text-2xl md:text-4xl font-segoe font-bold text-white mx-auto mt-2 tracking-wide text-center">
           {getGreeting()}{displayUsername ? `, ${displayUsername}` : ""}
         </h2>
-        <p className="text-[#94a3b8] font-semibold text-center text-sm md:text-base">
+        <p className="text-white font-normal text-center text-base leading-6 font-segoe mt-2">
           From first draft to final edit, i'm here to help you write better,
           faster.
         </p>
-        <h2 className="text-lg md:text-xl mt-6 md:mt-10 font-bold text-white mx-auto text-center">
+        <h2 className="text-lg md:text-xl mt-6 md:mt-10 font-bold text-white mx-auto text-center font-segoe">
           What would you like to write today?
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 mt-6 md:mt-10 text-white p-2 w-full max-w-4xl">

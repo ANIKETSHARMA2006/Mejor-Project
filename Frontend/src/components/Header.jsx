@@ -28,7 +28,7 @@ const Header = () => {
           />
         </div>
         <div className="ml-2">
-          <h1 className="text-white pt-1 text-sm md:text-base">New writing session</h1>
+          <h1 className="text-white pt-1 text-lg leading-7 font-normal font-segoe">New writing session</h1>
           <p className="text-[#757474] text-[10px] md:text-xs font-semibold hidden sm:block">
             Ai writing Assistant : Always improving.
           </p>

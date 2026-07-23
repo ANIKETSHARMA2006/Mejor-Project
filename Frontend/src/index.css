@@ -3,6 +3,7 @@
 @theme {
   --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Petrona", ui-serif, Georgia, serif;
+  --font-segoe: -apple-system-body, ui-sans-serif, -apple-system, "system-ui", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, "sans-serif", "Segoe UI Emoji", "Segoe UI Symbol";
 
   --animate-glow: glow 3s ease-in-out infinite;
 
