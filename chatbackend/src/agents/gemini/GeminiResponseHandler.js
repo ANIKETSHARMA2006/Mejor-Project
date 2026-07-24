@@ -99,6 +99,6 @@ class GeminiResponseHandler {
     };
 }
 
-module.exports = {
+export {
     GeminiResponseHandler,
 };

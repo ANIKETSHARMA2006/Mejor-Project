@@ -1,9 +1,8 @@
-const { StreamChat } = require("stream-chat");
-const { apiKey, serverClient } = require("../serverClient");
-const { OpenAIAgent } = require("./openai/OpenAiAgent");
-const { GeminiAgent } = require("./gemini/GeminiAgent");
-const { AgentPlatform } = require("./types");
-
+import { StreamChat } from "stream-chat";
+import { apiKey, serverClient } from "../serverClient.js";
+import { OpenAIAgent } from "./openai/OpenAiAgent.js";
+import { GeminiAgent } from "./gemini/GeminiAgent.js";
+import { AgentPlatform } from "./types.js";
 const createAgent = async (
     user_id,
     platform,
@@ -32,6 +31,6 @@ const createAgent = async (
     }
 };
 
-module.exports = {
+export {
     createAgent,
 };

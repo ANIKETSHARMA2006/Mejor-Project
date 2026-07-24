@@ -1,5 +1,5 @@
-const OpenAI = require("openai");
-const { OpenAIResponseHandler } = require("./OpenAIResponseHandler");
+import OpenAI from "openai";
+import { OpenAIResponseHandler } from "./OpenAIResponseHandler.js";
 
 class OpenAIAgent {
     constructor(chatClient, channel) {
@@ -156,6 +156,6 @@ Your goal is to provide accurate, current, and helpful written content. Failure 
     }
 }
 
-module.exports = {
+export {
     OpenAIAgent,
 };

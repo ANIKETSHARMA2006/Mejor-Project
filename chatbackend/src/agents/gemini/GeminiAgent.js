@@ -1,5 +1,6 @@
-const { GoogleGenerativeAI } = require("@google/generative-ai");
-const { GeminiResponseHandler } = require("./GeminiResponseHandler");
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GeminiResponseHandler } from "./GeminiResponseHandler.js";
+import fs from "fs";
 
 class GeminiAgent {
     constructor(chatClient, channel) {
@@ -86,7 +87,7 @@ class GeminiAgent {
             if (!message) return;
 
             console.log(`[GeminiAgent] Received message from user: ${message}`);
-            require('fs').appendFileSync('b:\\\\Coding\\\\WebMainProject\\\\Mejor-Project\\\\chatbackend\\\\debug.log', `[GeminiAgent] Received message: ${message}\\n`);
+            fs.appendFileSync('b:\\\\Coding\\\\WebMainProject\\\\Mejor-Project\\\\chatbackend\\\\debug.log', `[GeminiAgent] Received message: ${message}\\n`);
             this.lastInteractionTs = Date.now();
 
             const writingTask = eventMessage.custom?.writingTask;
@@ -229,6 +230,6 @@ class GeminiAgent {
     }
 }
 
-module.exports = {
+export {
     GeminiAgent,
 };

@@ -1,17 +1,24 @@
-const bcrypt = require("bcrypt");
-const crypto = require("crypto");
-const fs = require("fs/promises");
-const jwt = require("jsonwebtoken");
-const path = require("path");
+import bcrypt from "bcrypt";
+import crypto from "crypto";
+import fs from "fs/promises";
+import jwt from "jsonwebtoken";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const dataDir = path.join(__dirname, "..", "data");
 const usersFile = path.join(dataDir, "users.json");
 const sessionCookieName = "mejor_session";
-const jwtSecret = process.env.JWT_SECRET || process.env.SESSION_SECRET;
 const saltRounds = 10;
 
-if (!jwtSecret) {
-    throw new Error("Missing JWT_SECRET or SESSION_SECRET environment variable");
+function getJwtSecret() {
+    const secret = process.env.JWT_SECRET || process.env.SESSION_SECRET;
+    if (!secret) {
+        throw new Error("Missing JWT_SECRET or SESSION_SECRET environment variable");
+    }
+    return secret;
 }
 
 async function ensureUsersFile() {
@@ -88,7 +95,7 @@ function isBcryptHash(passwordHash) {
 }
 
 function createSessionToken(userId) {
-    return jwt.sign({ userId }, jwtSecret, { expiresIn: "7d" });
+    return jwt.sign({ userId }, getJwtSecret(), { expiresIn: "7d" });
 }
 
 function getSessionUserId(req) {
@@ -103,7 +110,7 @@ function getSessionUserId(req) {
     }
 
     try {
-        const payload = jwt.verify(token, jwtSecret);
+        const payload = jwt.verify(token, getJwtSecret());
         return payload.userId;
     } catch {
         return null;
@@ -197,7 +204,7 @@ function requireApiAuth(req, res, next) {
     next();
 }
 
-module.exports = {
+export {
     attachUser,
     clearSessionCookie,
     loginOrCreateUser,
