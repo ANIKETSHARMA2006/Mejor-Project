@@ -50,3 +50,6 @@ Temporary Items
 *.p12
 *.pfx
 secrets/
+node_modules
+.env
+dist

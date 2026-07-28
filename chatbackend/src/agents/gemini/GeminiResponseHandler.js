@@ -27,6 +27,13 @@ class GeminiResponseHandler {
                 const textDelta = chunk.text();
                 if (textDelta) {
                     this.message_text += textDelta;
+                    
+                    // Prevent exceeding Stream Chat's 5000 char limit
+                    if (this.message_text.length > 4900) {
+                        this.message_text = this.message_text.substring(0, 4900) + "\n\n*[Message truncated due to length limits]*";
+                        this.is_done = true; // Stop processing further chunks
+                    }
+
                     const now = Date.now();
                     
                     // Throttle updates to avoid hitting rate limits while still being fast
@@ -92,6 +99,6 @@ class GeminiResponseHandler {
     };
 }
 
-module.exports = {
+export {
     GeminiResponseHandler,
 };

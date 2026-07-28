@@ -263,6 +263,6 @@ class OpenAIResponseHandler {
     };
 }
 
-module.exports = {
+export {
     OpenAIResponseHandler,
 };

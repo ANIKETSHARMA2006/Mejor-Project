@@ -12,7 +12,7 @@ const StarsBackground = () => {
   }, []);
 
   return (
-    <div className="fixed inset-0 -z-10 overflow-hidden bg-[#050816]">
+    <div className="fixed inset-0 -z-10 overflow-hidden bg-[#000000]">
       {stars.map((star, i) => (
         <span
           key={i}

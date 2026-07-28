@@ -22,8 +22,24 @@ const Chat = () => {
 
     const initChat = async () => {
       try {
-        // Fetch token from backend using session cookie
-        const response = await axios.post('/api/token', {}, { withCredentials: true });
+        const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || (window.location.hostname === 'localhost' ? 'http://localhost:3001' : 'https://mejor-backend.onrender.com');
+
+        // Extract session token from URL if present
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlToken = urlParams.get('session_token');
+        if (urlToken) {
+            localStorage.setItem('mejor_session_token', urlToken);
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+
+        const sessionToken = localStorage.getItem('mejor_session_token');
+        const axiosConfig = {
+            withCredentials: true,
+            headers: sessionToken ? { Authorization: `Bearer ${sessionToken}` } : {}
+        };
+
+        // Fetch token from backend using session cookie or Bearer token
+        const response = await axios.post(`${API_BASE_URL}/token`, {}, axiosConfig);
         const { token, userId } = response.data;
 
         // Initialize Stream Client
@@ -31,8 +47,13 @@ const Chat = () => {
         await chatClient.connectUser({ id: userId, name: userId }, token);
         setClient(chatClient);
 
-        // Create a unique channel for this user and the AI
-        const channelId = `react-chat-${userId}`;
+        // Create a unique channel for this user and the AI, starting fresh if page is closed
+        let sessionId = sessionStorage.getItem('chat_session_id');
+        if (!sessionId) {
+            sessionId = Date.now().toString();
+            sessionStorage.setItem('chat_session_id', sessionId);
+        }
+        const channelId = `react-chat-${userId}-${sessionId}`;
         const newChannel = chatClient.channel('messaging', channelId, {
           name: 'AI Companion Chat'
         });
@@ -54,7 +75,7 @@ const Chat = () => {
         setIsCheckingAuth(false);
 
         // Start AI agent on backend in the background (no await)
-        axios.post('/api/start-ai-agent', { channel_id: channelId }, { withCredentials: true })
+        axios.post(`${API_BASE_URL}/start-ai-agent`, { channel_id: channelId }, axiosConfig)
              .catch(err => console.error("Error starting AI agent:", err));
 
         // Listen for new messages
@@ -88,10 +109,9 @@ const Chat = () => {
       } catch (error) {
         console.error("Failed to initialize chat:", error);
         if (error.response && error.response.status === 401) {
-          window.location.href = 'http://localhost:3000/login';
+          window.location.href = 'https://mejor-backend.onrender.com/login';
         } else {
           setIsCheckingAuth(false);
-          alert("Chat Connection Error: " + (error.message || "Unknown error") + "\nPlease check your API keys or console for details.");
         }
       }
     };
@@ -137,21 +157,22 @@ const Chat = () => {
 
   if (isCheckingAuth) {
     return (
-      <div className='w-full h-screen flex justify-center items-center bg-black text-white'>
-        <div className="animate-pulse flex flex-col items-center">
-          <div className="w-12 h-12 border-4 border-purple-500 border-t-transparent rounded-full animate-spin"></div>
-          <p className="mt-4 text-gray-400">Loading chat...</p>
+      <div className='w-full h-[100dvh] flex justify-center items-center bg-black text-white'>
+        <div className="inline-flex flex-col items-center justify-between h-[50px] w-fit scale-125">
+          <span className="text-[#C8B6FF] text-[0.8rem] tracking-[1px] font-bold">LOADING</span>
+          <div className="relative w-full h-[16px]">
+            <span className="absolute bottom-0 left-0 bg-[#9A79FF] rounded-[50px] block h-[16px] w-[16px] animate-loading_713 before:absolute before:top-0 before:left-0 before:content-[''] before:w-full before:h-full before:bg-[#D1C2FF] before:rounded-[inherit] before:animate-loading2_713"></span>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className='relative z-0 w-full h-screen flex justify-center items-center flex-col'>
-      <div className='absolute z-[-1] w-175 h-145 pointer-events-none bg-purple-700/30 rounded-full blur-[140px] top-[50%] left-1/2 -translate-x-1/2 -translate-y-1/2 animate-glow'></div>
+    <div className='relative z-0 w-full h-[100dvh] flex justify-center items-center flex-col overflow-hidden'>
       <StarsBackground />
       <Header />
-      {messages.length>0?<Chatsection messages={messages} />:<Open inputRef={inputRef} />}
+      {messages.length>0?<Chatsection messages={messages} />:<Open inputRef={inputRef} username={client?.user?.id} />}
       <Input inputRef={inputRef} handleSubmit={handleSubmit} />
     </div>
   )
